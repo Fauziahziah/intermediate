@@ -39,7 +39,6 @@ class MyPasswordEditText : AppCompatEditText {
         compoundDrawablePadding = 20
 
         setHint("password")
-        setAutofillHints(AUTOFILL_HINT_PASSWORD)
         setDrawable(passwordIconDrawable)
 
         addTextChangedListener(object: TextWatcher {

@@ -9,6 +9,7 @@ import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import com.example.mysubmission_intermediate.databinding.ActivityMainBinding
 import com.example.mysubmission_intermediate.UI.SignUpFragment
+import com.example.mysubmission_intermediate.UI.SignInFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupAction() {
-      /*  binding.btnGoSignIn.setOnClickListener{
+       binding.btnGoSignIn.setOnClickListener{
             val signInFragment = SignInFragment()
             val fragment : Fragment? =
                 supportFragmentManager.findFragmentByTag(SignInFragment::class.java.simpleName)
@@ -48,7 +49,7 @@ class MainActivity : AppCompatActivity() {
             binding.btnGoSignIn.visibility = View.GONE
             binding.btnGoSignUp.visibility = View.GONE
 
-        } */
+        }
 
         binding.btnGoSignUp.setOnClickListener{
             val signUpFragment = SignUpFragment()

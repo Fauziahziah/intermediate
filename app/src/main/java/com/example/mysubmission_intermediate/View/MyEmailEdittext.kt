@@ -35,7 +35,6 @@ class MyEmailEdittext : AppCompatEditText {
 
 
         setHint("Email")
-        setAutofillHints(AUTOFILL_HINT_EMAIL_ADDRESS)
         setDrawable(emailIconDrawable)
 
         addTextChangedListener(object: TextWatcher {

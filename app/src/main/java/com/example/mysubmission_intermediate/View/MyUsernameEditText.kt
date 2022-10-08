@@ -32,7 +32,6 @@ class MyUsernameEditText : AppCompatEditText {
         compoundDrawablePadding = 20
 
         setHint("user")
-        setAutofillHints(AUTOFILL_HINT_USERNAME)
         setDrawable(usernameIconDrawable)
 
         addTextChangedListener(object: TextWatcher{
