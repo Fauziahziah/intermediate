@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MySubmission_intermediate</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="message_email_error">must be unique</string>
+    <string name="message_name_error">username cannot be empty</string>
+    <string name="message_password_error">must be at least 6 characters</string>
+</resources>
