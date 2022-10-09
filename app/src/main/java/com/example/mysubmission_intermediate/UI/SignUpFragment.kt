@@ -105,8 +105,8 @@ class SignUpFragment : Fragment() {
     private fun setId() {
         binding.apply {
             signUpViewModel.registerAccount(
-                etEmailEdit.text.toString(),
                 etUsernameEdit.text.toString(),
+                etEmailEdit.text.toString(),
                 etPasswordEdit.text.toString()
             )
         }

@@ -5,4 +5,6 @@
     <string name="message_email_error">must be unique</string>
     <string name="message_name_error">username cannot be empty</string>
     <string name="message_password_error">must be at least 6 characters</string>
+    <string name="message_email_novalid">Invalid Email</string>
+    <string name="message_password_novalid">Invalid Password</string>
 </resources>

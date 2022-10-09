@@ -9,10 +9,6 @@ import com.example.mysubmission_intermediate.UI.SignUpFragment
 import com.example.mysubmission_intermediate.UI.SignUpViewModel
 import com.example.mysubmission_intermediate.UI.SignInViewModel
 
-
-
-
-
 class ViewModelFactory(private val pref: Repository) : ViewModelProvider.NewInstanceFactory(){
 
     @Suppress("UNCHECKED_CAST")
