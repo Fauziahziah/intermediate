@@ -1,9 +1,8 @@
 package com.example.mysubmission_intermediate.Api
 
+import android.location.Location
 import retrofit2.Call
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import retrofit2.http.*
 
 
 interface ApiService {
@@ -21,5 +20,19 @@ interface ApiService {
         @Field("email") name: String,
         @Field("password") email: String
     ): Call<LoginResponses.LoginResponse>
+
+    @GET("V1/stories")
+    suspend fun getAllStories(
+        @Header("Authorization") token: String,
+        @Query("page") page: Int? = null,
+        @Query("size") size: Int? = null,
+        @Query("location") location: Int? = null
+    ): StroriesResponse
+
+    @GET("v1/stories")
+    fun getStoriesWithLocation(
+        @Header("Authorization") token: String,
+        @Query("location") includeLocation: Int = 1
+    ): Call<StroriesResponse>
 
 }

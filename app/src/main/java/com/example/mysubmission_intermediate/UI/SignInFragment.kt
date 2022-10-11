@@ -132,8 +132,10 @@ class SignInFragment : Fragment() {
     private fun intentFragment() {
         signInViewModel.loginResponse.observe( viewLifecycleOwner ) { response ->
             if (!response.error) {
-                val intent = Intent(this@SignInFragment.requireContext(), StoryActivity::class.java)
-                startActivity(intent)
+               requireActivity().run{
+                   startActivity(Intent(this, StoryActivity::class.java))
+                   finish()
+               }
             }
         }
     }
