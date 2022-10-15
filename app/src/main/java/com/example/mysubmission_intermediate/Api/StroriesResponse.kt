@@ -1,7 +1,7 @@
 package com.example.mysubmission_intermediate.Api
 
-import com.google.gson.annotations.SerializedName
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 data class StroriesResponse (

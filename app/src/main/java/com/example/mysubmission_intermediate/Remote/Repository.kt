@@ -1,21 +1,22 @@
 package com.example.mysubmission_intermediate.Remote
 
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
+import com.example.mysubmission_intermediate.Api.*
+import com.example.mysubmission_intermediate.Model.UserModel
+import com.example.mysubmission_intermediate.Model.UserPreference
+import com.example.mysubmission_intermediate.Remote.Data.StoryPagingSource
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import android.util.Log
-import androidx.lifecycle.*
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.asLiveData
-import androidx.paging.*
-import com.example.mysubmission_intermediate.Api.*
-import com.example.mysubmission_intermediate.Remote.Data.StoryPagingSource
-import com.example.mysubmission_intermediate.Model.UserModel
-import com.example.mysubmission_intermediate.Model.UserPreference
-
-
 
 
 class Repository private constructor(
@@ -126,35 +127,37 @@ class Repository private constructor(
         ).liveData
     }
 
-    suspend fun uploadStory(token: String, file: MultipartBody.Part, description: RequestBody) {
+    fun uploadStory(token: String, file: MultipartBody.Part, description: RequestBody) {
         _showLoading.value = true
-        val client = apiService.uploadImage(token, file, description)
-        Log.d("TOKEN", token)
+        try {
+            val client = apiService.uploadImage(token, file, description)
+            client.enqueue(object : Callback<FileUploadResponse> {
+                override fun onResponse(
+                    call: Call<FileUploadResponse>,
+                    response: Response<FileUploadResponse>
+                ) {
+                    _showLoading.value = false
+                    if (response.isSuccessful && response.body() != null) {
 
-        client.enqueue(object : Callback<FileUploadResponse> {
-            override fun onResponse(
-                call: Call<FileUploadResponse>,
-                response: Response<FileUploadResponse>
-            ) {
-                _showLoading.value = false
-                if (response.isSuccessful && response.body() != null) {
-                    _fileuploadResponse.value = response.body()
-                    _toastText.value = response.body()?.message
-                } else {
-                    _toastText.value = response.message().toString()
-                    Log.e(
-                        TAG,
-                        "onFailure: ${response.message()}, ${response.body()?.message.toString()}"
-                    )
+                        _fileuploadResponse.value = response.body()
+                        _toastText.value = response.body()?.message
+                    } else {
+                        _toastText.value = response.message().toString()
+                        Log.e(
+                            TAG,
+                            "onFailure: ${response.message()}, ${response.body()?.message.toString()}"
+                        )
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<FileUploadResponse>, t: Throwable) {
-                Log.d("error upload", t.message.toString())
-            }
+                override fun onFailure(call: Call<FileUploadResponse>, t: Throwable) {
+                    Log.d("error upload", t.message.toString())
+                }
 
-        })
-
+            })
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
     }
 
 
