@@ -5,9 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.mysubmission_intermediate.Remote.Injection
 import com.example.mysubmission_intermediate.Remote.Repository
-import com.example.mysubmission_intermediate.UI.SignUpFragment
-import com.example.mysubmission_intermediate.UI.SignUpViewModel
-import com.example.mysubmission_intermediate.UI.SignInViewModel
 import com.example.mysubmission_intermediate.UI.Story.AddStory.AddStoryViewModel
 import com.example.mysubmission_intermediate.UI.Story.Home.HomeViewModel
 import com.example.mysubmission_intermediate.UI.Story.logout.LogoutViewModel

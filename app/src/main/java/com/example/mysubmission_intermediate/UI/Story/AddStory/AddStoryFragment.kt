@@ -1,30 +1,29 @@
 package com.example.mysubmission_intermediate.UI.Story.AddStory
 
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import com.example.mysubmission_intermediate.R
-import com.example.mysubmission_intermediate.databinding.FragmentAddStoryBinding
-import androidx.fragment.app.viewModels
-import com.example.mysubmission_intermediate.UI.ViewModelFactory
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.mysubmission_intermediate.R
+import com.example.mysubmission_intermediate.UI.ViewModelFactory
+import com.example.mysubmission_intermediate.databinding.FragmentAddStoryBinding
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
@@ -64,7 +63,7 @@ class AddStoryFragment : Fragment() {
         binding.btnGallery.setOnClickListener { startGallery() }
         binding.btnUpload.setOnClickListener { uploadStory() }
 
-        return  root
+        return root
     }
 
     @Deprecated("Deprecated in Java")
@@ -97,7 +96,7 @@ class AddStoryFragment : Fragment() {
     private fun startGallery() {
         val intent = Intent()
         intent.action = Intent.ACTION_GET_CONTENT
-        intent.type ="image/*"
+        intent.type = "image/*"
         val chooser = Intent.createChooser(intent, "Choose a Picture")
         launcherIntentGallery.launch(chooser)
     }
@@ -143,11 +142,15 @@ class AddStoryFragment : Fragment() {
                     file.name,
                     requestImageFile
                 )
-                uploadResponse(
-                    it.token,
-                    imageMultipart,
+                val description =
                     binding.etDescStory.text.toString().toRequestBody("text/plain".toMediaType())
-                )
+                addStoryViewModel.uploadStory(it.token, imageMultipart, description)
+                addStoryViewModel.fileUploadResponse.observe(viewLifecycleOwner) {
+                    if (!it.error) {
+                        findNavController().navigate(R.id.action_navigation_addStory_to_navigation_home)
+                    }
+                }
+                showToast()
             } else {
                 Toast.makeText(
                     requireContext(),
@@ -157,21 +160,6 @@ class AddStoryFragment : Fragment() {
             }
         }
     }
-
-    private fun uploadResponse(
-        token: String,
-        file: MultipartBody.Part,
-        description: RequestBody
-    ) {
-        addStoryViewModel.uploadStory(token, file, description)
-        addStoryViewModel.fileUploadResponse.observe(viewLifecycleOwner) {
-            if (!it.error) {
-                findNavController().navigate(R.id.action_navigation_addStory_to_navigation_home)
-            }
-        }
-        showToast()
-    }
-
 
     private fun showToast() {
         addStoryViewModel.toastText.observe(viewLifecycleOwner) { toastText ->

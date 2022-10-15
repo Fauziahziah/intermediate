@@ -1,13 +1,12 @@
 package com.example.mysubmission_intermediate.UI.Story.Detail
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.mysubmission_intermediate.Api.StoryResponseItem
 import com.example.mysubmission_intermediate.R
 import com.example.mysubmission_intermediate.databinding.ActivityDetailBinding
-import com.example.mysubmission_intermediate.databinding.ActivityMainBinding
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding

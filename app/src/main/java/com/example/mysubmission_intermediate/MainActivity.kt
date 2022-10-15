@@ -1,15 +1,21 @@
 package com.example.mysubmission_intermediate
 
+import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.mysubmission_intermediate.databinding.ActivityMainBinding
-import com.example.mysubmission_intermediate.UI.SignUpFragment
 import com.example.mysubmission_intermediate.UI.SignInFragment
+import com.example.mysubmission_intermediate.UI.SignUpFragment
+import com.example.mysubmission_intermediate.UI.Story.Home.HomeViewModel
+import com.example.mysubmission_intermediate.UI.Story.StoryActivity
+import com.example.mysubmission_intermediate.UI.ViewModelFactory
+import com.example.mysubmission_intermediate.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -17,7 +23,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
+        val homeViewModel: HomeViewModel by viewModels {
+            factory
+        }
+        homeViewModel.loadState().observe(this){
+           if(it.token!="" && it.isLogin){ // Jika sudah login akan menuju StoryActivity
+               startActivity(Intent(this, StoryActivity::class.java))
+               finish()
+           }
+        }
         setupView()
         setupAction()
     }
