@@ -1,8 +1,10 @@
 package com.example.mysubmission_intermediate.UI.Story.Home
 
+import android.app.Activity
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.app.ActivityOptionsCompat
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +12,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.mysubmission_intermediate.Api.StoryResponseItem
 import com.example.mysubmission_intermediate.R
+import com.example.mysubmission_intermediate.UI.Story.Detail.DetailActivity
+import com.example.mysubmission_intermediate.UI.Story.Detail.DetailActivity.Companion.EXTRA_DATA
 import com.example.mysubmission_intermediate.databinding.ItemListStoryBinding
 
 class StoryAdapter : PagingDataAdapter<StoryResponseItem, StoryAdapter.ListStoryViewHolder>(mDiffCallback) {
@@ -30,6 +34,11 @@ class StoryAdapter : PagingDataAdapter<StoryResponseItem, StoryAdapter.ListStory
                            .error(R.drawable.ic_baseline_broken_image_24)
                    )
                    .into(imgStory)
+           }
+           itemView.setOnClickListener {
+               val intent = Intent(itemView.context, DetailActivity::class.java)
+               intent.putExtra(EXTRA_DATA, story)
+               itemView.context.startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(itemView.context as Activity).toBundle())
            }
          }
        }

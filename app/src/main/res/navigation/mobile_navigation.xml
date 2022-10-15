@@ -10,5 +10,20 @@
         android:name="com.example.mysubmission_intermediate.UI.Story.Home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/navigation_addStory"
+        android:name="com.example.mysubmission_intermediate.UI.Story.AddStory.AddStoryFragment"
+        android:label="@string/title_story"
+        tools:layout="@layout/fragment_add_story">
+        <action
+            app:launchSingleTop="true"
+            android:id="@+id/action_navigation_addStory_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_logout"
+        android:name="com.example.mysubmission_intermediate.UI.Story.logout.LogoutFragment"
+        android:label="@string/Profile"
+        tools:layout="@layout/fragment_logout" />
 
 </navigation>

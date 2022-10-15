@@ -126,7 +126,7 @@ class SignInFragment : Fragment() {
     }
 
     companion object {
-        private const val AUTH_KEY = "Bearer"
+        private const val AUTH_KEY = "Bearer "
     }
 
     private fun intentFragment() {
@@ -140,4 +140,7 @@ class SignInFragment : Fragment() {
         }
     }
 
+
+
 }
+

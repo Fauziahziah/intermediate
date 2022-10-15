@@ -39,6 +39,7 @@ class HomeFragment : Fragment() {
         val storyAdapter = StoryAdapter()
         binding.etStory.adapter = storyAdapter
         homeViewModel.loadState().observe(viewLifecycleOwner) { pref ->
+
             homeViewModel.getAllStories(pref.token).observe(viewLifecycleOwner) { pagingData ->
               storyAdapter.submitData(lifecycle, pagingData)
             }

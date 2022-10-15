@@ -13,4 +13,17 @@
     <string name="story_app">Story App</string>
     <string name="title">Title</string>
     <string name="details">Details</string>
+    <string name="add_story">Add Story</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="story_desc">Enter a Story Decription</string>
+    <string name="upload">Upload</string>
+    <string name="message_main_page">Have fun learning in dicoding</string>
+    <string name="logout">Logout</string>
+    <string name="detail_story">Detail Story</string>
+    <string name="username">Username</string>
+    <string name="detail_photo_story">Photo Detail Story</string>
+    <string name="input_image">Select a photo to upload!</string>
+    <string name="title_story">Title Story</string>
+    <string name="Profile">Profile</string>
 </resources>

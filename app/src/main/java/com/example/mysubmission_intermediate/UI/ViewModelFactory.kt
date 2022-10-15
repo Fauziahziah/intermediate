@@ -8,7 +8,9 @@ import com.example.mysubmission_intermediate.Remote.Repository
 import com.example.mysubmission_intermediate.UI.SignUpFragment
 import com.example.mysubmission_intermediate.UI.SignUpViewModel
 import com.example.mysubmission_intermediate.UI.SignInViewModel
+import com.example.mysubmission_intermediate.UI.Story.AddStory.AddStoryViewModel
 import com.example.mysubmission_intermediate.UI.Story.Home.HomeViewModel
+import com.example.mysubmission_intermediate.UI.Story.logout.LogoutViewModel
 
 class ViewModelFactory(private val pref: Repository) : ViewModelProvider.NewInstanceFactory(){
 
@@ -23,6 +25,12 @@ class ViewModelFactory(private val pref: Repository) : ViewModelProvider.NewInst
             }
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
                 HomeViewModel(pref) as T
+            }
+            modelClass.isAssignableFrom(AddStoryViewModel::class.java) -> {
+                AddStoryViewModel(pref) as T
+            }
+            modelClass.isAssignableFrom(LogoutViewModel::class.java) -> {
+                LogoutViewModel(pref) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

@@ -12,7 +12,6 @@ import androidx.lifecycle.asLiveData
 import androidx.paging.*
 import com.example.mysubmission_intermediate.Api.*
 import com.example.mysubmission_intermediate.Remote.Data.StoryPagingSource
-
 import com.example.mysubmission_intermediate.Model.UserModel
 import com.example.mysubmission_intermediate.Model.UserPreference
 
@@ -42,18 +41,21 @@ class Repository private constructor(
     private val _StroriesResponse = MutableLiveData<StroriesResponse>()
     val StoriesResponse: LiveData<StroriesResponse> = _StroriesResponse
 
+    private val _fileuploadResponse = MutableLiveData<FileUploadResponse>()
+    val fileUploadResponse: LiveData<FileUploadResponse> = _fileuploadResponse
+
     companion object {
         private const val TAG = "Repository"
 
         @Volatile
         private var instance: Repository? = null
         fun getInstance(
-            pref: UserPreference,
+            preferences: UserPreference,
             apiService: ApiService
         ): Repository =
             instance ?: synchronized(this) {
-                instance ?: Repository(pref, apiService)
-            }
+                instance ?: Repository(preferences, apiService)
+            }.also { instance = it }
     }
 
     fun registerAccount(name: String, email: String, password: String) {
@@ -124,20 +126,20 @@ class Repository private constructor(
         ).liveData
     }
 
-    fun getStoriesWithLocation(token: String) {
+    suspend fun uploadStory(token: String, file: MultipartBody.Part, description: RequestBody) {
         _showLoading.value = true
-        val client = apiService.getStoriesWithLocation(token)
+        val client = apiService.uploadImage(token, file, description)
         Log.d("TOKEN", token)
 
-        client.enqueue(object : Callback<StroriesResponse>
-        {
+        client.enqueue(object : Callback<FileUploadResponse> {
             override fun onResponse(
-                call: Call<StroriesResponse>,
-                response: Response<StroriesResponse>
+                call: Call<FileUploadResponse>,
+                response: Response<FileUploadResponse>
             ) {
                 _showLoading.value = false
                 if (response.isSuccessful && response.body() != null) {
-                    _StroriesResponse.value = response.body()
+                    _fileuploadResponse.value = response.body()
+                    _toastText.value = response.body()?.message
                 } else {
                     _toastText.value = response.message().toString()
                     Log.e(
@@ -147,14 +149,14 @@ class Repository private constructor(
                 }
             }
 
-            override fun onFailure(call: Call<StroriesResponse>, t: Throwable) {
-                _toastText.value = t.message.toString()
-                Log.e(TAG, "onFailure: ${t.message.toString()}")
+            override fun onFailure(call: Call<FileUploadResponse>, t: Throwable) {
+                Log.d("error upload", t.message.toString())
             }
+
         })
+
     }
 
-    private fun setupToken(token: String): String = "Bearer $token"
 
     fun loadState(): LiveData<UserModel> {
         return pref.getUser().asLiveData()
@@ -166,6 +168,10 @@ class Repository private constructor(
 
     suspend fun login() {
         pref.login()
+    }
+
+    suspend fun logout() {
+        pref.logout()
     }
 
 
